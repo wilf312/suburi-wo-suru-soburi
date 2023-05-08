@@ -8,26 +8,30 @@ export default function Chat() {
 
   const [text, setText] = useState(``);
   const [name, setName] = useState(``);
+
+  const refetch = () => {
+    fetch("/api/chat", {
+      method: "get",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json()).then((d) => {
+      console.log({ data: d.list });
+
+      setList(d.list.map((d) => {
+        return { text: d.value, name: d.key[1], date: new Date(d.key[2]) };
+      }));
+    }).catch(console.error);
+  };
   useEffect(() => {
     const name = localStorage.getItem(`name`) || ``;
 
     setName(name);
 
-    setInterval(() => {
-      fetch("/api/chat", {
-        method: "get",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json()).then((d) => {
-        console.log({ data: d.list });
+    refetch();
 
-        setList(d.list.map((d) => {
-          return { text: d.value, name: d.key[1], date: new Date(d.key[2]) };
-        }));
-      }).catch(console.error);
-    }, 3000);
+    setInterval(refetch, 3000);
   }, []);
 
   return (
