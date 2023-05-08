@@ -81,7 +81,7 @@ export default function Chat() {
         }}
       >
         <input
-          max={50}
+          maxlength={50}
           style={{
             fontSize: `30px`,
           }}
@@ -95,7 +95,7 @@ export default function Chat() {
           }}
         />
         <input
-          max={50}
+          maxlength={50}
           style={{
             fontSize: `30px`,
           }}
