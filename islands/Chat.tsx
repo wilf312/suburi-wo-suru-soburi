@@ -20,7 +20,7 @@ export default function Chat() {
       console.log({ data: d.list });
 
       setList(d.list.map((d) => {
-        return { text: d.value, name: d.key[1], date: new Date(d.key[2]) };
+        return { text: d.value, name: d.key[2], date: new Date(d.key[1]) };
       }));
     }).catch(console.error);
   };
