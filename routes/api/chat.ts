@@ -9,6 +9,22 @@ export const handler = async (
     const kv = await Deno.openKv();
     const requestJson = await _req.json();
 
+    if (
+      typeof requestJson.name !== `string` ||
+      typeof requestJson.text !== `string` ||
+      requestJson.name.length > 50 ||
+      requestJson.text.length > 50
+    ) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+        }),
+        {
+          status: 400,
+        },
+      );
+    }
+
     await kv.set(
       [`chat`, new Date().toISOString(), requestJson.name],
       requestJson.text,
