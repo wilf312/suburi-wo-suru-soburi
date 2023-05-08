@@ -7,8 +7,12 @@ export default function Chat() {
   const [list, setList] = useState([]);
 
   const [text, setText] = useState(``);
-  const [name, setName] = useState(localStorage.getItem(`name`) || ``);
+  const [name, setName] = useState(``);
   useEffect(() => {
+    const name = localStorage.getItem(`name`) || ``;
+
+    setName(name);
+
     fetch("/api/chat", {
       method: "get",
       headers: {
