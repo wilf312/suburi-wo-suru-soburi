@@ -26,6 +26,10 @@ export default function Chat() {
         return { text: d.value, name: d.key[1], date: new Date(d.key[2]) };
       }));
     }).catch(console.error);
+
+    setTimeout(() => {
+      location.reload();
+    }, 10000);
   }, []);
 
   return (
