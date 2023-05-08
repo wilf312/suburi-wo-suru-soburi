@@ -110,34 +110,33 @@ export default function Chat() {
         />
         <button
           style={{
-            fontSize: `50px`,
+            fontSize: `30px`,
           }}
           type="submit"
         >
           send
         </button>
+        <button
+          style={{
+            border: `none`,
+            background: `none`,
+            color: `white`,
+          }}
+          type="button"
+          onClick={() => {
+            fetch("/api/chat", {
+              method: "delete",
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ secret: `test` }),
+            }).then((res) => res.json()).then(console.log).catch(console.error);
+          }}
+        >
+          全てを消す
+        </button>
       </form>
-
-      <button
-        style={{
-          border: `none`,
-          background: `none`,
-          color: `white`,
-        }}
-        type="button"
-        onClick={() => {
-          fetch("/api/chat", {
-            method: "delete",
-            headers: {
-              "Accept": "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ secret: `test` }),
-          }).then((res) => res.json()).then(console.log).catch(console.error);
-        }}
-      >
-        全てを消す
-      </button>
     </div>
   );
 }
