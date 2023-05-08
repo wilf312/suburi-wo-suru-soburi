@@ -37,7 +37,7 @@ export const handler = async (
     const iter = await kv.list<string>({ prefix: ["chat"] });
 
     const list = [];
-    for await (const res of iter) list.push(res);
+    for await (const res of iter) list.unshift(res);
 
     return new Response(JSON.stringify({
       list: list,

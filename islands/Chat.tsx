@@ -13,23 +13,21 @@ export default function Chat() {
 
     setName(name);
 
-    fetch("/api/chat", {
-      method: "get",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json()).then((d) => {
-      console.log({ data: d.list });
+    setInterval(() => {
+      fetch("/api/chat", {
+        method: "get",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()).then((d) => {
+        console.log({ data: d.list });
 
-      setList(d.list.map((d) => {
-        return { text: d.value, name: d.key[1], date: new Date(d.key[2]) };
-      }));
-    }).catch(console.error);
-
-    setTimeout(() => {
-      location.reload();
-    }, 10000);
+        setList(d.list.map((d) => {
+          return { text: d.value, name: d.key[1], date: new Date(d.key[2]) };
+        }));
+      }).catch(console.error);
+    }, 3000);
   }, []);
 
   return (
@@ -100,7 +98,11 @@ export default function Chat() {
           placeholder={`入力してください`}
           type="text"
           value={text}
-          onInput={(e) => setText(e.currentTarget.value ?? ``)}
+          onInput={(e) => {
+            const _text = e.currentTarget.value ?? ``;
+            setText(_text);
+            localStorage.setItem(`text`, _text);
+          }}
         />
         <button
           style={{
