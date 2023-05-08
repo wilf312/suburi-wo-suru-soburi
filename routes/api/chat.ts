@@ -10,7 +10,7 @@ export const handler = async (
     const requestJson = await _req.json();
 
     await kv.set(
-      [`chat`, requestJson.name, new Date().toISOString()],
+      [`chat`, new Date().toISOString(), requestJson.name],
       requestJson.text,
     );
     return new Response(JSON.stringify({
